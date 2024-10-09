@@ -1,6 +1,7 @@
 package org.sopt.week1;
 
 import java.util.List;
+import org.sopt.week1.Main.UI.InvalidInputException;
 
 public class DiaryController {
     private Status status = Status.READY;
@@ -20,19 +21,27 @@ public class DiaryController {
 
     // APIS
     final List<Diary> getList() {
-        return List.of();
+        return diaryService.findAll();
     }
 
     final void post(final String body) {
-
+        diaryService.save(body);
     }
 
     final void delete(final String id) {
-
+        diaryService.delete(parsedId(id));
     }
 
     final void patch(final String id, final String body) {
+        diaryService.update(parsedId(id), body);
+    }
 
+    private long parsedId(String id) {
+        try {
+            return Long.parseLong(id);
+        } catch (NumberFormatException e) {
+            throw new InvalidInputException();
+        }
     }
 
     enum Status {
