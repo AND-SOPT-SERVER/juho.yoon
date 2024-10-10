@@ -1,9 +1,13 @@
 package org.sopt.week1;
 
+import java.text.BreakIterator;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.logging.Logger;
 import org.sopt.week1.Main.UI.InvalidInputException;
 
 public class Diary {
+    private static Logger logger = Logger.getGlobal();
     private static final int MAX_BODY_LENGTH = 30;
 
     private Long id;
@@ -28,9 +32,23 @@ public class Diary {
     }
 
     private void validateBodyLength(String body) {
-        if (body.length() > MAX_BODY_LENGTH) {
+        int count = countGraphemes(body);
+
+        if (count > MAX_BODY_LENGTH) {
+            logger.warning("입력된 글자 수가 30자를 넘습니다. 길이 : " + count);
             throw new InvalidInputException();
         }
+    }
+
+    private int countGraphemes(String body) {
+        BreakIterator breakIterator = BreakIterator.getCharacterInstance(Locale.ROOT);
+        breakIterator.setText(body);
+
+        int graphemeCount = 0;
+        while (breakIterator.next() != BreakIterator.DONE) {
+            graphemeCount++;
+        }
+        return graphemeCount;
     }
 
     @Override
