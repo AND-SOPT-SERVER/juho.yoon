@@ -3,6 +3,7 @@ package org.sopt.diary.api.dto.request;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import org.sopt.diary.domain.Diary;
+import org.sopt.member.domain.Member;
 
 public record DiaryRequest(
         @NotBlank(message = "제목을 입력해주세요.")
@@ -12,7 +13,7 @@ public record DiaryRequest(
         @Size(max = 100, message = "내용은 공백 포함 100자 이하로 입력해주세요.")
         String content) {
 
-    public Diary toDiary() {
-        return new Diary(title, content);
+    public Diary toDiary(Member member) {
+        return new Diary(title, content, member);
     }
 }
