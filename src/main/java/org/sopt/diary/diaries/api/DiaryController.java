@@ -8,6 +8,7 @@ import org.sopt.diary.diaries.api.dto.request.DiaryRequest;
 import org.sopt.diary.diaries.api.dto.response.DiaryCratedResponse;
 import org.sopt.diary.diaries.api.dto.response.DiaryDetailResponse;
 import org.sopt.diary.diaries.api.dto.response.DiaryListResponse;
+import org.sopt.diary.diaries.domain.Category;
 import org.sopt.diary.diaries.service.DiaryService;
 import org.sopt.diary.member.domain.Member;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -47,6 +49,12 @@ public class DiaryController {
     public ResponseEntity<DiaryDetailResponse> getById(
             @PathVariable @Min(value = 1L, message = "다이어리 식별자는 양수로 이루어져야 합니다.") long diaryId) {
         return ResponseEntity.ok(diaryService.getById(diaryId));
+    }
+
+    @GetMapping("/category")
+    public ResponseEntity<DiaryListResponse> getById(
+            @RequestParam Category category) {
+        return ResponseEntity.ok(diaryService.getByCategory(category));
     }
 
     @PatchMapping("/{diaryId}")

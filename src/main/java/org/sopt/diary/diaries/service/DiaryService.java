@@ -5,6 +5,7 @@ import org.sopt.diary.diaries.api.dto.response.DiaryCratedResponse;
 import org.sopt.diary.diaries.api.dto.response.DiaryDetailResponse;
 import org.sopt.diary.diaries.api.dto.response.DiaryListResponse;
 import org.sopt.diary.diaries.api.dto.response.DiaryResponse;
+import org.sopt.diary.diaries.domain.Category;
 import org.sopt.diary.diaries.domain.Diary;
 import org.sopt.diary.diaries.repository.DiaryRepository;
 import org.sopt.diary.member.domain.Member;
@@ -19,6 +20,7 @@ public class DiaryService {
     }
 
     public DiaryCratedResponse createDiary(Member member, DiaryRequest request) {
+        validateDuplicationTitle(request);
         Diary diary = diaryRepository.save(request.toDiary(member));
         return new DiaryCratedResponse(diary.getId());
     }
@@ -34,6 +36,13 @@ public class DiaryService {
         return new DiaryDetailResponse(getDiary(diaryId));
     }
 
+    public DiaryListResponse getByCategory(Category category) {
+        return new DiaryListResponse(diaryRepository.findTop10ByCategoryOrderByCreatedAtDesc(category)
+                .stream()
+                .map(DiaryResponse::new)
+                .toList());
+    }
+
     public void update(Member member, long diaryId, DiaryRequest diaryRequest) {
         Diary diary = getDiary(diaryId);
         validateOwner(member, diary);
@@ -44,6 +53,14 @@ public class DiaryService {
         Diary diary = getDiary(diaryId);
         validateOwner(member, diary);
         diaryRepository.deleteById(diaryId);
+    }
+
+    private void validateDuplicationTitle(DiaryRequest request) {
+        boolean exists = diaryRepository.findAll().stream()
+                .anyMatch(diary -> diary.getTitle().equals(request.title()));
+        if (exists) {
+            throw new IllegalArgumentException("중복된 제목 입니다.");
+        }
     }
 
     private Diary getDiary(long diaryId) {
