@@ -52,7 +52,7 @@ public class DiaryController {
     }
 
     @GetMapping("/category")
-    public ResponseEntity<DiaryListResponse> getById(
+    public ResponseEntity<DiaryListResponse> getByCategory(
             @RequestParam Category category) {
         return ResponseEntity.ok(diaryService.getByCategory(category));
     }
