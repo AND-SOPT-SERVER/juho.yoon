@@ -1,4 +1,4 @@
-package org.sopt.diary.config.domain;
+package org.sopt.config.domain;
 
 import java.time.LocalDateTime;
 import jakarta.persistence.EntityListeners;

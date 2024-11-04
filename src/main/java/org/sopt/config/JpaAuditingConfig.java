@@ -1,4 +1,4 @@
-package org.sopt.diary.config;
+package org.sopt.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;

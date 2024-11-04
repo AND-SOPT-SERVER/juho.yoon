@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import org.sopt.diary.config.domain.BaseEntity;
+import org.sopt.config.domain.BaseEntity;
 
 @Entity
 public class Diary extends BaseEntity {
