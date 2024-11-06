@@ -1,6 +1,6 @@
-package org.sopt.diary.api.dto.response;
+package org.sopt.diary.diaries.api.dto.response;
 
-import org.sopt.diary.domain.Diary;
+import org.sopt.diary.diaries.domain.Diary;
 
 public record DiaryResponse(long id, String title) {
 

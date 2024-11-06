@@ -1,10 +1,10 @@
-package org.sopt.diary.repository;
+package org.sopt.diary.diaries.repository;
 
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.sopt.diary.domain.Diary;
+import org.sopt.diary.diaries.domain.Diary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
@@ -19,7 +19,7 @@ public class DiaryRepositoryTest {
     @BeforeEach
     public void setUp() {
         for (int i = 1; i <= 15; i++) {
-            diaryRepository.save(new Diary("Title " + i, "Content " + i));
+            diaryRepository.save(new Diary("Title " + i, "Content " + i, null));
         }
     }
 
